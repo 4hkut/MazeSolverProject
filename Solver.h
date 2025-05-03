@@ -1,7 +1,7 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
-#include "Node.h"     // ✅ REQUIRED so Solver knows about Node
+#include "Node.h"     
 #include "Graph.h"
 #include "Maze.h"
 #include <stack>
