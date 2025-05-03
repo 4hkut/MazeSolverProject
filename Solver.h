@@ -1,83 +1,87 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
+#include "Node.h"     // ✅ REQUIRED so Solver knows about Node
+#include "Graph.h"
 #include "Maze.h"
 #include <stack>
 #include <queue>
-#include <vector>
-#include <iostream>
-using namespace std;
 
 class Solver {
 public:
     static bool solveDFS(Maze& maze) {
-        struct Point { int r, c; };
-        stack<Point> s;
-        s.push({maze.getStartRow(), maze.getStartCol()});
+        Graph* graph = maze.toGraph();  // assuming Maze has toGraph()
+        Node* start = graph->getNode(maze.getStartRow(), maze.getStartCol());
+        Node* end = graph->getNode(maze.getEndRow(), maze.getEndCol());
+
+        if (!start || !end) return false;
+
+        std::stack<Node*> s;
+        s.push(start);
+        start->visited = true;
 
         while (!s.empty()) {
-            Point p = s.top(); s.pop();
+            Node* current = s.top(); s.pop();
 
-            if (maze.getCell(p.r, p.c) == 'E') {
-                cout << "DFS: Maze solved!\n";
+            if (current == end) {
+                markPath(current, maze);
+                delete graph;
                 return true;
             }
 
-            if (maze.getCell(p.r, p.c) != 'S')
-                maze.setCell(p.r, p.c, '*');
-
-            vector<Point> neighbors = {
-                {p.r - 1, p.c}, {p.r + 1, p.c},
-                {p.r, p.c - 1}, {p.r, p.c + 1}
-            };
-
-            for (auto n : neighbors) {
-                if (n.r >= 0 && n.r < maze.getRows() &&
-                    n.c >= 0 && n.c < maze.getCols()) {
-                    char cell = maze.getCell(n.r, n.c);
-                    if (cell == '.' || cell == 'E') {
-                        s.push(n);
-                    }
+            for (Node* neighbor : current->neighbors) {
+                if (!neighbor->visited) {
+                    neighbor->visited = true;
+                    neighbor->parent = current;
+                    s.push(neighbor);
                 }
             }
         }
-        cout << "DFS: No path found.\n";
+
+        delete graph;
         return false;
     }
 
     static bool solveBFS(Maze& maze) {
-        struct Point { int r, c; };
-        queue<Point> q;
-        q.push({maze.getStartRow(), maze.getStartCol()});
+        Graph* graph = maze.toGraph();
+        Node* start = graph->getNode(maze.getStartRow(), maze.getStartCol());
+        Node* end = graph->getNode(maze.getEndRow(), maze.getEndCol());
+
+        if (!start || !end) return false;
+
+        std::queue<Node*> q;
+        q.push(start);
+        start->visited = true;
 
         while (!q.empty()) {
-            Point p = q.front(); q.pop();
+            Node* current = q.front(); q.pop();
 
-            if (maze.getCell(p.r, p.c) == 'E') {
-                cout << "BFS: Maze solved!\n";
+            if (current == end) {
+                markPath(current, maze);
+                delete graph;
                 return true;
             }
 
-            if (maze.getCell(p.r, p.c) != 'S')
-                maze.setCell(p.r, p.c, '+');
-
-            vector<Point> neighbors = {
-                {p.r - 1, p.c}, {p.r + 1, p.c},
-                {p.r, p.c - 1}, {p.r, p.c + 1}
-            };
-
-            for (auto n : neighbors) {
-                if (n.r >= 0 && n.r < maze.getRows() &&
-                    n.c >= 0 && n.c < maze.getCols()) {
-                    char cell = maze.getCell(n.r, n.c);
-                    if (cell == '.' || cell == 'E') {
-                        q.push(n);
-                    }
+            for (Node* neighbor : current->neighbors) {
+                if (!neighbor->visited) {
+                    neighbor->visited = true;
+                    neighbor->parent = current;
+                    q.push(neighbor);
                 }
             }
         }
-        cout << "BFS: No path found.\n";
+
+        delete graph;
         return false;
+    }
+
+private:
+    static void markPath(Node* endNode, Maze& maze) {
+        Node* current = endNode->parent;
+        while (current && current->parent) {
+            maze.setCell(current->row, current->col, '*'); // or your marker
+            current = current->parent;
+        }
     }
 };
 
