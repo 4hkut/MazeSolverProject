@@ -78,13 +78,13 @@ public:
                 char cell = grid[r][c];
                 if (cell == 'S' || cell == 'E' || cell == '.') {
                     // Check 4 directions
-                    if (r > 0 && (grid[r-1][c] == '.' || grid[r-1][c] == 'E' || grid[r-1][c] == 'S'))
+                    if (r > 0 && (grid[r-1][c] == '.' || grid[r-1][c] == 'E' || grid[r-1][c] == 'S')) // UP
                         graph->addEdge(r, c, r-1, c);
-                    if (r < rows-1 && (grid[r+1][c] == '.' || grid[r+1][c] == 'E' || grid[r+1][c] == 'S'))
+                    if (r < rows-1 && (grid[r+1][c] == '.' || grid[r+1][c] == 'E' || grid[r+1][c] == 'S')) // Down
                         graph->addEdge(r, c, r+1, c);
-                    if (c > 0 && (grid[r][c-1] == '.' || grid[r][c-1] == 'E' || grid[r][c-1] == 'S'))
+                    if (c > 0 && (grid[r][c-1] == '.' || grid[r][c-1] == 'E' || grid[r][c-1] == 'S')) // Left
                         graph->addEdge(r, c, r, c-1);
-                    if (c < cols-1 && (grid[r][c+1] == '.' || grid[r][c+1] == 'E' || grid[r][c+1] == 'S'))
+                    if (c < cols-1 && (grid[r][c+1] == '.' || grid[r][c+1] == 'E' || grid[r][c+1] == 'S')) //Right
                         graph->addEdge(r, c, r, c+1);
                 }
             }
