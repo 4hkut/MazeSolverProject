@@ -6,17 +6,18 @@
 #include "Maze.h"
 #include <stack>
 #include <queue>
+using namespace std;
 
 class Solver {
 public:
     static bool solveDFS(Maze& maze) {
-        Graph* graph = maze.toGraph();  // assuming Maze has toGraph()
+        Graph* graph = maze.toGraph();  
         Node* start = graph->getNode(maze.getStartRow(), maze.getStartCol());
         Node* end = graph->getNode(maze.getEndRow(), maze.getEndCol());
 
         if (!start || !end) return false;
 
-        std::stack<Node*> s;
+        stack<Node*> s;
         s.push(start);
         start->visited = true;
 
@@ -49,7 +50,7 @@ public:
 
         if (!start || !end) return false;
 
-        std::queue<Node*> q;
+        queue<Node*> q;
         q.push(start);
         start->visited = true;
 
