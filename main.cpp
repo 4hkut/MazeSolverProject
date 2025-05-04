@@ -1,3 +1,4 @@
+
 #include "Maze.h"
 #include "Solver.h"
 #include "MazeGenerator.h"  // Include maze generator header
@@ -28,13 +29,13 @@ int main() {
             delete maze;  // Free previous maze if any
             maze = new Maze(filename);  // Load the maze from the file
             originalMaze = new Maze(*maze);  // Save a copy of the original maze
-            cout << "Maze loaded!\n\n";  // Added a newline for better clarity
+            cout << "Maze loaded!\n\n";
         }
         else if (choice == 2) {
             if (originalMaze) {
                 originalMaze->printMaze();  // Always print the original maze
             } else {
-                cout << "Load a maze first.\n\n";  // Added a newline for better clarity
+                cout << "Load a maze first.\n\n";  
             }
         }
         else if (choice == 3) {
@@ -55,13 +56,13 @@ int main() {
                     if (saveChoice == 'y' || saveChoice == 'Y') {
                         string saveFilename = filename + "_DFS";
                         maze->saveToFile(saveFilename);
-                        cout << "DFS solution saved to " << saveFilename << "\n\n";  // Added a newline for better clarity
+                        cout << "DFS solution saved to " << saveFilename << "\n\n"; 
                     }
                 } else {
-                    cout << "No path found (DFS).\n\n";  // Added a newline for better clarity
+                    cout << "No path found (DFS).\n\n";  
                 }
             } else {
-                cout << "Load a maze first.\n\n";  // Added a newline for better clarity
+                cout << "Load a maze first.\n\n";  
             }
         }
         else if (choice == 4) {
@@ -82,13 +83,13 @@ int main() {
                     if (saveChoice == 'y' || saveChoice == 'Y') {
                         string saveFilename = filename + "_BFS";
                         maze->saveToFile(saveFilename);
-                        cout << "BFS solution saved to " << saveFilename << "\n\n";  // Added a newline for better clarity
+                        cout << "BFS solution saved to " << saveFilename << "\n\n";  
                     }
                 } else {
-                    cout << "No path found (BFS).\n\n";  // Added a newline for better clarity
+                    cout << "No path found (BFS).\n\n"; 
                 }
             } else {
-                cout << "Load a maze first.\n\n";  // Added a newline for better clarity
+                cout << "Load a maze first.\n\n"; 
             }
         }
         else if (choice == 5) {
@@ -97,9 +98,9 @@ int main() {
                 cout << "Enter filename to save: ";
                 cin >> filename;
                 maze->saveToFile(filename);
-                cout << "Maze saved to " << filename << "\n\n";  // Added a newline for better clarity
+                cout << "Maze saved to " << filename << "\n\n";  
             } else {
-                cout << "Load a maze first.\n\n";  // Added a newline for better clarity
+                cout << "Load a maze first.\n\n"; 
             }
         }
         else if (choice == 6) {
@@ -111,14 +112,14 @@ int main() {
             cout << "Enter filename to save generated maze: ";
             cin >> filename;
             MazeGenerator::generateMaze(r, c, filename);  // Generate a random maze
-            cout << "\nMaze generated and saved to " << filename << "\n\n";  // Added a newline for better clarity
+            cout << "\nMaze generated and saved to " << filename << "\n\n"; 
         }
         else if (choice == 7) {
             cout << "Goodbye!\n";
             break;  // Exit the program
         }
         else {
-            cout << "Invalid choice. Please try again.\n\n";  // Added a newline for better clarity
+            cout << "Invalid choice. Please try again.\n\n"; 
         }
     }
 
