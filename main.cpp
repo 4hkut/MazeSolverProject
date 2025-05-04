@@ -1,4 +1,3 @@
-
 #include "Maze.h"
 #include "Solver.h"
 #include "MazeGenerator.h"  // Include maze generator header
