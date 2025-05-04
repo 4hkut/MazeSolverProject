@@ -5,10 +5,11 @@
 #include <map>
 #include <vector>
 #include <utility>
+using namespace std;
 
 class Graph {
 private:
-    std::map<std::pair<int, int>, Node*> nodes;
+    map<pair<int, int>, Node*> nodes;
 
 public:
     ~Graph() {
